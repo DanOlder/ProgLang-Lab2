@@ -21,7 +21,7 @@ int kol_let() {
 	return kol;
 }
 
-int proverka() {	//не забыть добавить проверку на повторения
+int proverka() {
 	char chis[7][10];
 	char res[10];
 	int ichis[7];
@@ -33,7 +33,7 @@ int proverka() {	//не забыть добавить проверку на повторения
 	memset(res, '\0', sizeof(res));
 	memset(ichis, 0, sizeof(ichis));
 
-	for (int i = 0; word[i][0] != '\0'; i++) {
+	for (int i = 0; i != count + 1; i++) {
 		for (int j = 0; word[i][j] != '\0'; j++) {
 			int k;
 			for (k = 0; word[i][j] != tab[k].let; k++);
@@ -46,7 +46,7 @@ int proverka() {	//не забыть добавить проверку на повторения
 		res[j] = tab[k].num + 48;
 	}
 
-	for (int i = 0; chis[i][0] != '\0'; i++) {//
+	for (int i = 0; i != count + 1; i++) {//
 		ichis[i] = atoi(chis[i]);
 	}
 	ires = atoi(res);
@@ -99,7 +99,8 @@ void ins(clock_t* cur_time) {
 	count = 0;	//кол-во слов -1
 
 	for (int i = 0, j = 0; ; i++) {
-		if (str[i] != ' ' && str[i] != '+' && str[i] != '=') {
+		if (str[i] == ' ') continue;
+		if (str[i] != '+' && str[i] != '=') {
 			word[count][j] = str[i];
 			//
 			int stop = 0, p = 0;
