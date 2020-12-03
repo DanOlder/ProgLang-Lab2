@@ -33,7 +33,9 @@ int proverka() {
 	memset(res, '\0', sizeof(res));
 	memset(ichis, 0, sizeof(ichis));
 
-	for (int i = 0; i != count + 1; i++) {
+	int acount = count + 1;
+
+	for (int i = 0; i != acount; i++) {
 		for (int j = 0; word[i][j] != '\0'; j++) {
 			int k;
 			for (k = 0; word[i][j] != tab[k].let; k++);
@@ -46,18 +48,18 @@ int proverka() {
 		res[j] = tab[k].num + 48;
 	}
 
-	for (int i = 0; i != count + 1; i++) {//
+	for (int i = 0; i != acount; i++) {//
 		ichis[i] = atoi(chis[i]);
 	}
 	ires = atoi(res);
 
 	int itogo = 0;
-	for (int i = 0; i != count + 1; i++) {
+	for (int i = 0; i != acount; i++) {
 		itogo += ichis[i];
 	}
 	if (itogo == ires) {
 		printf("PogChamp:\n");
-		for (int i = 0; i != count + 1; i++) {
+		for (int i = 0; i != acount; i++) {
 			printf("%d", ichis[i]);
 			if (i != count) printf(" + ");
 		}
@@ -69,7 +71,7 @@ int proverka() {
 }
 
 int perebor(int q) {
-	for (int nmb = 0; nmb < 10; nmb++) {	//не забыть о res
+	for (int nmb = 0; nmb < 10; nmb++) {
 		//проверка на совпадения и на первую цифру 0
 		if (tab[q].ved == 1 && nmb == 0) continue;
 		int contin = 0;
@@ -87,7 +89,7 @@ int perebor(int q) {
 		else
 			if (proverka()) return 3;
 	}
-}//в оптимизации перенести проверку на совпадения из proverka в perebor рядом с проверкой на 0
+}
 
 void ins(clock_t* cur_time) {
 	char str[100];
