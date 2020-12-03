@@ -11,54 +11,59 @@ struct table {
 }tab[10];
 
 char word[7][12], rword[12];
+int wordleng[7], rwordleng, maxl;
 int count;
 int kollet;
 
-int proverka() {
-	char chis[7][10];
-	char res[10] = { '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0' };
-	int ichis[7] = { 0, 0, 0, 0, 0, 0, 0 };
-	int ires = 0;
-
-	for (int i = 0; i < 7; i++) {
-		memset(chis[i], '\0', 10);
+void leng() {
+	for (int i = 0; i != count + 1; i++) {
+		wordleng[i] = strlen(word[i]);
 	}
+	maxl = 0;
+	for (int i = 0; i != count + 1; i++) {
+		if (maxl < wordleng[i]) maxl = wordleng[i];
+	}
+	rwordleng = strlen(rword);
+}
 
+int proverka() {
 	int acount = count + 1;
 
+	int ost = 0;
+	for (int j = 1; j != rwordleng + 1; j++)
+	{
+		int sum = 0;
+		for (int i = 0; i != acount; i++) {
+			if (wordleng[i] - j < 0) continue;
+			int k;
+			for (k = 0; word[i][wordleng[i] - j] != tab[k].let; k++);
+			sum += tab[k].num;
+		}
+		sum += ost;
+		if (j == rwordleng && sum > 9 && maxl == rwordleng) return 0;
+		int k;
+		for (k = 0; rword[rwordleng - j] != tab[k].let; k++);
+		if (sum % 10 != tab[k].num) return 0;
+		else ost = sum / 10;
+	}
+
 	for (int i = 0; i != acount; i++) {
-		for (int j = 0; word[i][j] != '\0'; j++) {
+		for (int j = 0; j != wordleng[i]; j++) {
 			int k;
 			for (k = 0; word[i][j] != tab[k].let; k++);
-			chis[i][j] = tab[k].num + 48;
+			printf("%d", tab[k].num);
 		}
+		if (i != count) printf(" + ");
 	}
-	for (int j = 0; rword[j] != '\0'; j++) {
+	printf(" = ");
+	for (int j = 0; j != rwordleng; j++) {
 		int k;
 		for (k = 0; rword[j] != tab[k].let; k++);
-		res[j] = tab[k].num + 48;
+		printf("%d", tab[k].num);
 	}
+	printf("\n");
 
-	for (int i = 0; i != acount; i++) {//
-		ichis[i] = atoi(chis[i]);
-	}
-	ires = atoi(res);
-
-	int itogo = 0;
-	for (int i = 0; i != acount; i++) {
-		itogo += ichis[i];
-	}
-	if (itogo == ires) {
-		printf("PogChamp:\n");
-		for (int i = 0; i != acount; i++) {
-			printf("%d", ichis[i]);
-			if (i != count) printf(" + ");
-		}
-		printf(" = %d\n\n", ires);
-		return 1;
-	}
-
-	return 0;
+	return 1;
 }
 
 int perebor(int q) {
@@ -154,6 +159,8 @@ int main()
 	for (int i = 0; tab[i].let != '\0'; i++) {
 		kollet++;
 	}
+
+	leng();
 
 	if (perebor(kollet - 1) != 3) printf("BibleThump\n\n");
 
