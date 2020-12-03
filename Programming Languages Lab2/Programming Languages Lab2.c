@@ -12,14 +12,7 @@ struct table {
 
 char word[7][12], rword[12];
 int count;
-
-int kol_let() {
-	int kol = 0;
-	for (int i = 0; tab[i].let != '\0'; i++) {
-		kol++;
-	}
-	return kol;
-}
+int kollet;
 
 int proverka() {
 	char chis[7][10];
@@ -73,7 +66,7 @@ int perebor(int q) {
 		//проверка на совпадения и на первую цифру 0
 		if (tab[q].ved == 1 && nmb == 0) continue;
 		int contin = 0;
-		for (int i = q; i != kol_let(); i++) {
+		for (int i = q; i != kollet; i++) {
 			if (tab[i].num == nmb) {
 				contin = 1;
 				break;
@@ -158,7 +151,11 @@ int main()
 	printf("Enter your rebus:\n\n");
 	ins(&cur_time);
 
-	if (perebor(kol_let() - 1) != 3) printf("BibleThump\n\n");
+	for (int i = 0; tab[i].let != '\0'; i++) {
+		kollet++;
+	}
+
+	if (perebor(kollet - 1) != 3) printf("BibleThump\n\n");
 
 	cur_time = clock() - cur_time;
 	printf("Process time in ticks: %ld\n", cur_time);
