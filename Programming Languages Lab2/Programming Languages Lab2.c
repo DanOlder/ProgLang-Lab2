@@ -23,15 +23,13 @@ int kol_let() {
 
 int proverka() {
 	char chis[7][10];
-	char res[10];
-	int ichis[7];
+	char res[10] = { '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0' };
+	int ichis[7] = { 0, 0, 0, 0, 0, 0, 0 };
 	int ires = 0;
 
 	for (int i = 0; i < 7; i++) {
-		memset(chis[i], '\0', sizeof(chis[i]));
+		memset(chis[i], '\0', 10);
 	}
-	memset(res, '\0', sizeof(res));
-	memset(ichis, 0, sizeof(ichis));
 
 	int acount = count + 1;
 
@@ -76,7 +74,10 @@ int perebor(int q) {
 		if (tab[q].ved == 1 && nmb == 0) continue;
 		int contin = 0;
 		for (int i = q; i != kol_let(); i++) {
-			if (tab[i].num == nmb) contin = 1;
+			if (tab[i].num == nmb) {
+				contin = 1;
+				break;
+			}
 		}
 		if (contin == 1) continue;
 		//
