@@ -4,6 +4,8 @@
 #include <string.h>
 #include <time.h>
 
+//hi gitlab
+
 struct table {
 	char let;
 	int num;
